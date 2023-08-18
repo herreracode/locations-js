@@ -1,0 +1,29 @@
+version: '3.5'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
+    container_name: locations-js
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./:/app
+
+  r-base:
+    build:
+      context: .
+      dockerfile: DockerfileForR
+    working_dir: /usr/local/src/myscripts
+    container_name: r-base-locations-js
+    restart: unless-stopped
+    volumes:
+      - ./:/usr/local/src/myscripts
+    stdin_open: true
+    tty: true
+
+networks:
+  default:
+    name: ctdesarrollo-with-vpn
+    external: true
