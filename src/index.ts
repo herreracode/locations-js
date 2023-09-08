@@ -5,6 +5,6 @@ const Repository : JsonDBLocationRepository =  new JsonDBLocationRepository()
 const holaFunct = () => console.log("gola")
 
 export {
-    JsonDBLocationRepository,
+    Repository,
     holaFunct
 }
