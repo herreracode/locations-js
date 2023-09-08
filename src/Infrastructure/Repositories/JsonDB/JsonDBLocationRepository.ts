@@ -2,7 +2,6 @@ import LocationRepository from "../../../Domain/Contracts/LocationRepository";
 import City from "../../../Domain/Entities/City";
 import Country from "../../../Domain/Entities/Country";
 import State from "../../../Domain/Entities/State";
-import * as json from "../JsonDB/JsonData/fragments/file-fragment-1.json"
 
 export default class JsonDBLocationRepository implements LocationRepository {
     
@@ -46,10 +45,17 @@ export default class JsonDBLocationRepository implements LocationRepository {
         throw new Error("Method not implemented.");
     }
     
+    // @ts-ignore
     getAllCountries(): Country[] {
 
-        console.log(json);
-        
+        try{
+            let hola = require('../../../../JsonData/fragments/file-fragment-1.json');
+
+            console.log(hola.length);
+        }catch (e) {
+            console.log("asdasdas");
+        }
+
         return [new Country()]
     }
 }

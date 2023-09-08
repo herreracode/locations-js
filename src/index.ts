@@ -2,9 +2,6 @@ import JsonDBLocationRepository from "./Infrastructure/Repositories/JsonDB/JsonD
 
 const Repository : JsonDBLocationRepository =  new JsonDBLocationRepository()
 
-const holaFunct = () => console.log("gola")
-
 export {
     Repository,
-    holaFunct
 }
