@@ -49,11 +49,21 @@ export default class JsonDBLocationRepository implements LocationRepository {
     getAllCountries(): Country[] {
 
         try{
-            let hola = require('../../../../JsonData/fragments/file-fragment-1.json');
 
-            console.log(hola.length);
+            let numberFile : number = 1;
+
+            do{
+
+                let hola = require('./JsonData/fragments/file-fragment-'+ numberFile + '.json');
+            
+                numberFile++;
+
+                console.log(hola.length);
+
+            }while(true){}
+
         }catch (e) {
-            console.log("asdasdas");
+            console.log("cayo en excepcion");
         }
 
         return [new Country()]

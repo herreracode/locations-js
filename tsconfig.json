@@ -4,7 +4,8 @@
     "esModuleInterop": true,
     "target": "es2016",
     "declaration": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "noResolve": false,
   },
   "include": [
     "src/**/*"

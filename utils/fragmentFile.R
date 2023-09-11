@@ -18,7 +18,7 @@ if(is.na(fragments) || fragments < 2L )
   stop("Number of fragments should be an integer greater than 1")
 }
 
-repositoryPath <- paste(getwd(), "/src/Infrastructure/Repositories/", sep = "")
+repositoryPath <- paste(getwd(), "/", sep = "")
 fileFullPath <- paste(repositoryPath, inFilePath, sep = "")
 saveFullPath <- paste(repositoryPath, saveFilePath, sep = "")
 
