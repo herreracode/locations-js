@@ -3,6 +3,10 @@ import City from "../../../Domain/Entities/City";
 import Country from "../../../Domain/Entities/Country";
 import State from "../../../Domain/Entities/State";
 export default class JsonDBLocationRepository implements LocationRepository {
+    private static _instances;
+    private _countriesCollection;
+    static getInstance(): JsonDBLocationRepository;
+    private setJsonData;
     findCountriesByIsoTwoCode(iso2: string, withStates: boolean, withCities: boolean): Country[];
     findCountryByIsoTwoCodeOrFail(iso2: string): Country;
     findCountriesByIsoThreeCode(iso3: any, withStates: boolean, withCities: boolean): Country[];

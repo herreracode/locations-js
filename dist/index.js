@@ -5,6 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Repository = void 0;
 const JsonDBLocationRepository_1 = __importDefault(require("./Infrastructure/Repositories/JsonDB/JsonDBLocationRepository"));
-const Repository = new JsonDBLocationRepository_1.default();
+const Repository = JsonDBLocationRepository_1.default.getInstance();
 exports.Repository = Repository;
 console.log(Repository.getAllCountries());

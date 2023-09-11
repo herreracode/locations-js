@@ -5,6 +5,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const Country_1 = __importDefault(require("../../../Domain/Entities/Country"));
 class JsonDBLocationRepository {
+    static getInstance() {
+        const subclass = this;
+        if (!JsonDBLocationRepository._instances) {
+            JsonDBLocationRepository._instances = new subclass();
+        }
+        return JsonDBLocationRepository._instances;
+    }
+    setJsonData(numberFile) {
+        this._countriesCollection = require('./JsonData/fragments/file-fragment-' + numberFile + '.json');
+    }
     findCountriesByIsoTwoCode(iso2, withStates, withCities) {
         throw new Error("Method not implemented.");
     }
@@ -40,12 +50,11 @@ class JsonDBLocationRepository {
         try {
             let numberFile = 1;
             do {
-                let hola = require('./JsonData/fragments/file-fragment-' + numberFile + '.json');
+                this.setJsonData(numberFile);
                 numberFile++;
-                console.log(hola.length);
+                console.log(this._countriesCollection.length);
             } while (true);
-            {
-            }
+            { }
         }
         catch (e) {
             console.log("cayo en excepcion");
