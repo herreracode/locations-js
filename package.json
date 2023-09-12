@@ -1,17 +1,21 @@
 {
-    "name": "locations-js",
-    "version": "1.0.0",
-    "description": "locations open sources",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "files": [
-        "/dist"
-    ],
-    "devDependencies": {
-        "ts-node": "^10.9.1",
-        "typescript": "^5.1.6"
-    },
-    "dependencies": {
-        "lodash": "^4.17.21"
-    }
+  "name": "locations-js",
+  "version": "1.0.0",
+  "description": "locations open sources",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "devDependencies": {
+    "ts-jest": "^29.1.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "scripts": {
+    "test": "jest"
+  }
 }
