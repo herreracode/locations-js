@@ -1,8 +1,5 @@
-import LocationRepository from "../../../Domain/Contracts/LocationRepository";
-import City from "../../../Domain/Entities/City";
-import Country from "../../../Domain/Entities/Country";
-import State from "../../../Domain/Entities/State";
-export default class JsonDBLocationRepository implements LocationRepository {
+import { LocationRepositoryContract, City, Country, State } from "./../../../Domain";
+export default class JsonDBLocationRepository implements LocationRepositoryContract {
     private static _instances;
     private _countriesCollection;
     static getInstance(): JsonDBLocationRepository;

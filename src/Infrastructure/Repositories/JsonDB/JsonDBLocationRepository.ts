@@ -1,10 +1,12 @@
-import LocationRepository from "../../../Domain/Contracts/LocationRepository";
-import City from "../../../Domain/Entities/City";
-import Country from "../../../Domain/Entities/Country";
-import State from "../../../Domain/Entities/State";
-import {CountryLibObject} from "../../../Domain/Entities/types/types"
+import {
+    LocationRepositoryContract,
+    City,
+    Country,
+    State,
+    CountryLibObject
+} from "./../../../Domain"
 
-export default class JsonDBLocationRepository implements LocationRepository {
+export default class JsonDBLocationRepository implements LocationRepositoryContract {
 
     private static _instances: JsonDBLocationRepository;
 

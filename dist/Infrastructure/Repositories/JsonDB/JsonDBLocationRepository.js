@@ -1,9 +1,6 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const Country_1 = __importDefault(require("../../../Domain/Entities/Country"));
+const Domain_1 = require("./../../../Domain");
 class JsonDBLocationRepository {
     static getInstance() {
         const subclass = this;
@@ -81,7 +78,7 @@ class JsonDBLocationRepository {
         { }
     }
     mapCountry(country) {
-        return new Country_1.default(country.id, country.name, country.iso2, country.iso3);
+        return new Domain_1.Country(country.id, country.name, country.iso2, country.iso3);
     }
 }
 exports.default = JsonDBLocationRepository;
