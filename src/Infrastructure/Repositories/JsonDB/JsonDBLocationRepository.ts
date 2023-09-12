@@ -2,12 +2,13 @@ import LocationRepository from "../../../Domain/Contracts/LocationRepository";
 import City from "../../../Domain/Entities/City";
 import Country from "../../../Domain/Entities/Country";
 import State from "../../../Domain/Entities/State";
+import {CountryLibObject} from "../../../Domain/Entities/types/types"
 
 export default class JsonDBLocationRepository implements LocationRepository {
 
     private static _instances: JsonDBLocationRepository;
 
-    private _countriesCollection: { id, name, iso2, iso3 }[];
+    private _countriesCollection: CountryLibObject[];
 
     public static getInstance(): JsonDBLocationRepository {
 
