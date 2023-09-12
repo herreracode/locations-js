@@ -6,7 +6,8 @@ import State from "../../../Domain/Entities/State";
 export default class JsonDBLocationRepository implements LocationRepository {
 
     private static _instances: JsonDBLocationRepository;
-    private _countriesCollection: object[];
+
+    private _countriesCollection: { id, name, iso2, iso3 }[];
 
     public static getInstance(): JsonDBLocationRepository {
 
@@ -66,24 +67,31 @@ export default class JsonDBLocationRepository implements LocationRepository {
     // @ts-ignore
     getAllCountries(): Country[] {
 
-        try {
-
-            let numberFile: number = 1;
+            let numberFile: number = 1
+            let countries: Country[]
 
             do {
 
-                this.setJsonData(numberFile)
+                try {
 
-                numberFile++;
+                    this.setJsonData(numberFile)
 
-                console.log(this._countriesCollection.length);
+                }catch (e) {
+
+                    return countries
+
+                }
+
+                countries = this._countriesCollection.map((country): Country => {
+
+                    return new Country(
+                        country.id, country.name, country.iso2, country.iso3
+                    )
+
+                })
+
+                numberFile++
 
             } while (true) { }
-
-        } catch (e) {
-            console.log("cayo en excepcion");
-        }
-
-        return [new Country()]
     }
 }

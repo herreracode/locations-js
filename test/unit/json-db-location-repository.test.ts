@@ -1,18 +1,14 @@
-import {describe, expect, test, beforeAll, beforeEach} from '@jest/globals';
+import JsonDBLocationRepository from "../../src/Infrastructure/Repositories/JsonDB/JsonDBLocationRepository";
 
 describe('Json DB repository test', () => {
 
-    beforeAll( () => {
-
-        console.log("asdasdas")
-
-    })
+    const _JsonDbRepository :JsonDBLocationRepository = new JsonDBLocationRepository;
 
     test('get all countries', () => {
 
+        let countries = _JsonDbRepository.getAllCountries()
 
-
-        expect(1 + 2).toBe(3);
+        expect(countries).not.toBeNull();
 
     });
 
