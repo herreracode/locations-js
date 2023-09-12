@@ -25,8 +25,44 @@ export default class JsonDBLocationRepository implements LocationRepository {
         this._countriesCollection = require('./JsonData/fragments/file-fragment-' + numberFile + '.json')
     }
 
-    findCountriesByIsoTwoCode(iso2: string, withStates: boolean, withCities: boolean): Country[] {
-        throw new Error("Method not implemented.");
+    findCountriesByIsoTwoCode(iso2: string|string[] , withStates: boolean = false, withCities: boolean = false): Country[] {
+
+        let numberFile: number = 1,
+            countriesFound: CountryLibObject[] = []
+
+        this.setJsonData(numberFile)
+
+        if(typeof iso2 === 'string'){
+
+            countriesFound = this._countriesCollection.filter((country: CountryLibObject) :boolean => country.iso2 == iso2)
+
+        }else{
+
+            iso2.forEach((isoCode) => {
+
+                let countryFound = null
+
+                numberFile = 1
+
+                do{
+
+                    countryFound = this._countriesCollection.filter((country: CountryLibObject) :boolean => country.iso2 == isoCode)
+
+                    if(countryFound.length > 0){
+                        countriesFound = countriesFound.concat(countryFound)
+                        break
+                    }
+
+                    this.setJsonData(numberFile++)
+
+                } while (true)
+
+            })
+        }
+
+        return countriesFound.map(
+            (countryFound: CountryLibObject) : Country => this.mapCountry(countryFound)
+        );
     }
 
     findCountryByIsoTwoCodeOrFail(iso2: string): Country {
@@ -83,16 +119,17 @@ export default class JsonDBLocationRepository implements LocationRepository {
 
                 }
 
-                countries = this._countriesCollection.map((country): Country => {
-
-                    return new Country(
-                        country.id, country.name, country.iso2, country.iso3
-                    )
-
-                })
+                countries = this._countriesCollection.map((country): Country => this.mapCountry(country))
 
                 numberFile++
 
-            } while (true) { }
+            } while (true) {}
+    }
+
+    private mapCountry(country: CountryLibObject):Country
+    {
+        return new Country(
+            country.id, country.name, country.iso2, country.iso3
+        )
     }
 }

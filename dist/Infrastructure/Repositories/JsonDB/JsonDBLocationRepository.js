@@ -15,8 +15,27 @@ class JsonDBLocationRepository {
     setJsonData(numberFile) {
         this._countriesCollection = require('./JsonData/fragments/file-fragment-' + numberFile + '.json');
     }
-    findCountriesByIsoTwoCode(iso2, withStates, withCities) {
-        throw new Error("Method not implemented.");
+    findCountriesByIsoTwoCode(iso2, withStates = false, withCities = false) {
+        let numberFile = 1, countriesFound = [];
+        this.setJsonData(numberFile);
+        if (typeof iso2 === 'string') {
+            countriesFound = this._countriesCollection.filter((country) => country.iso2 == iso2);
+        }
+        else {
+            iso2.forEach((isoCode) => {
+                let countryFound = null;
+                numberFile = 1;
+                do {
+                    countryFound = this._countriesCollection.filter((country) => country.iso2 == isoCode);
+                    if (countryFound.length > 0) {
+                        countriesFound = countriesFound.concat(countryFound);
+                        break;
+                    }
+                    this.setJsonData(numberFile++);
+                } while (true);
+            });
+        }
+        return countriesFound.map((countryFound) => this.mapCountry(countryFound));
     }
     findCountryByIsoTwoCodeOrFail(iso2) {
         throw new Error("Method not implemented.");
@@ -47,19 +66,22 @@ class JsonDBLocationRepository {
     }
     // @ts-ignore
     getAllCountries() {
-        try {
-            let numberFile = 1;
-            do {
+        let numberFile = 1;
+        let countries;
+        do {
+            try {
                 this.setJsonData(numberFile);
-                numberFile++;
-                console.log(this._countriesCollection.length);
-            } while (true);
-            { }
-        }
-        catch (e) {
-            console.log("cayo en excepcion");
-        }
-        return [new Country_1.default()];
+            }
+            catch (e) {
+                return countries;
+            }
+            countries = this._countriesCollection.map((country) => this.mapCountry(country));
+            numberFile++;
+        } while (true);
+        { }
+    }
+    mapCountry(country) {
+        return new Country_1.default(country.id, country.name, country.iso2, country.iso3);
     }
 }
 exports.default = JsonDBLocationRepository;
