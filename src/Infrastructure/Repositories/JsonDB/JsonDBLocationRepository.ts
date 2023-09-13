@@ -4,7 +4,7 @@ import {
     Country,
     State,
     CountryLibObject
-} from "./../../../Domain"
+} from "@locations-domain/index"
 
 export default class JsonDBLocationRepository implements LocationRepositoryContract {
 

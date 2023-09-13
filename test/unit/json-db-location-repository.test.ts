@@ -1,4 +1,4 @@
-import JsonDBLocationRepository from "../../src/Infrastructure/Repositories/JsonDB/JsonDBLocationRepository";
+import JsonDBLocationRepository from "@locations-infrastructure/Repositories/JsonDB/JsonDBLocationRepository";
 
 describe('Json DB repository test', () => {
 

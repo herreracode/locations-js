@@ -1,4 +1,4 @@
-import { LocationRepositoryContract, City, Country, State } from "./../../../Domain";
+import { LocationRepositoryContract, City, Country, State } from "@locations-domain/index";
 export default class JsonDBLocationRepository implements LocationRepositoryContract {
     private static _instances;
     private _countriesCollection;
