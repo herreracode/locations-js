@@ -3,7 +3,8 @@ import {
     City,
     Country,
     State,
-    CountryLibObject
+    CountryLibObject,
+    StateLibObject
 } from "./../../../Domain"
 
 export default class JsonDBLocationRepository implements LocationRepositoryContract {
@@ -63,7 +64,7 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
         }
 
         return countriesFound.map(
-            (countryFound: CountryLibObject) : Country => this.mapCountry(countryFound)
+            (countryFound: CountryLibObject) : Country => this.mapCountry(countryFound, withStates)
         );
     }
 
@@ -133,7 +134,24 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
         let CountryObject: Country = new Country(
             country.id, country.name, country.iso2, country.iso3
         );
+        
+        if(withState){
+
+            CountryObject.States = country.states.map((state) => this.mapState(state))
+
+        }
 
         return CountryObject
+    }
+
+    private mapState(state :StateLibObject) :State
+    {
+        let StateObject = new State(
+            state.id, state.name, state.state_code
+        );
+
+        //todo: with cities
+
+        return StateObject;
     }
 }

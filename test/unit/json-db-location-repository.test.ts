@@ -29,16 +29,16 @@ describe('Json DB repository test', () => {
     test('get countries by iso code 2 with states', () => {
 
         //with one country
-        let country = _JsonDbRepository.findCountriesByIsoTwoCode('AF')
+        let country = _JsonDbRepository.findCountriesByIsoTwoCode('AF', true)
 
         expect(country.length).toBe(1);
         expect(country[0].States).not.toBeNull();
 
         //with many countries
-        let countries = _JsonDbRepository.findCountriesByIsoTwoCode(['AF','VE'])
+        let countries = _JsonDbRepository.findCountriesByIsoTwoCode(['AF','VE'], true)
 
         expect(countries.length).toBe(2);
-        expect(country[0].States).not.toBeNull();
+        expect(countries[0].States).not.toBeNull();
 
     });
 
