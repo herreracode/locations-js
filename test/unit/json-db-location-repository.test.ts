@@ -26,6 +26,20 @@ describe('Json DB repository test', () => {
 
     });
 
+    test('get countries by non-existent iso code 2', () => {
+
+        //with one country
+        let country = _JsonDbRepository.findCountriesByIsoTwoCode('123', true)
+
+        expect(country.length).toBe(0);
+
+        //with many countries
+        let countries = _JsonDbRepository.findCountriesByIsoTwoCode(['345'], true)
+
+        expect(countries.length).toBe(0);
+
+    });
+
     test('get countries by iso code 2 with states', () => {
 
         //with one country

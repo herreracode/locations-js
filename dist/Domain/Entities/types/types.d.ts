@@ -3,5 +3,11 @@ type CountryLibObject = {
     name: string;
     iso2: string;
     iso3: string;
+    states: [];
 };
-export { CountryLibObject };
+type StateLibObject = {
+    id: number;
+    name: string;
+    state_code: string;
+};
+export { CountryLibObject, StateLibObject };

@@ -10,10 +10,11 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
     findCountryByIsoThreeCodeOrFail(iso3: string): Country;
     findCountriesById(id: string, withStates: boolean, withCities: boolean): Country[];
     findCountryByIdOrFail(id: string): Country;
-    findStatesByCountryIsoTwoCode(iso2: string): State[];
+    findStatesByCountryIsoTwoCode(iso2: string): Country[];
     findCitiesByCountryIsoTwoCode(iso2: string): City[];
     findStatesByCountryIsoThreeCode(iso3: string): State[];
     findCitiesByCountryIsoThreeCode(iso3: string): City[];
     getAllCountries(): Country[];
     private mapCountry;
+    private mapState;
 }

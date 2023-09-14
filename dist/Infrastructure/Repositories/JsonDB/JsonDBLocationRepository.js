@@ -23,16 +23,21 @@ class JsonDBLocationRepository {
                 let countryFound = null;
                 numberFile = 1;
                 do {
-                    countryFound = this._countriesCollection.filter((country) => country.iso2 == isoCode);
-                    if (countryFound.length > 0) {
-                        countriesFound = countriesFound.concat(countryFound);
+                    try {
+                        countryFound = this._countriesCollection.filter((country) => country.iso2 == isoCode);
+                        if (countryFound.length > 0) {
+                            countriesFound = countriesFound.concat(countryFound);
+                            break;
+                        }
+                        this.setJsonData(numberFile++);
+                    }
+                    catch (e) {
                         break;
                     }
-                    this.setJsonData(numberFile++);
                 } while (true);
             });
         }
-        return countriesFound.map((countryFound) => this.mapCountry(countryFound));
+        return countriesFound.map((countryFound) => this.mapCountry(countryFound, withStates));
     }
     findCountryByIsoTwoCodeOrFail(iso2) {
         throw new Error("Method not implemented.");
@@ -50,7 +55,7 @@ class JsonDBLocationRepository {
         throw new Error("Method not implemented.");
     }
     findStatesByCountryIsoTwoCode(iso2) {
-        throw new Error("Method not implemented.");
+        return this.findCountriesByIsoTwoCode(iso2, true);
     }
     findCitiesByCountryIsoTwoCode(iso2) {
         throw new Error("Method not implemented.");
@@ -79,7 +84,15 @@ class JsonDBLocationRepository {
     }
     mapCountry(country, withState = false) {
         let CountryObject = new Domain_1.Country(country.id, country.name, country.iso2, country.iso3);
+        if (withState) {
+            CountryObject.States = country.states.map((state) => this.mapState(state));
+        }
         return CountryObject;
+    }
+    mapState(state) {
+        let StateObject = new Domain_1.State(state.id, state.name, state.state_code);
+        //todo: with cities
+        return StateObject;
     }
 }
 exports.default = JsonDBLocationRepository;

@@ -17,7 +17,7 @@ export default interface LocationRepository{
 
     findCountryByIdOrFail(id: string) : Country;
 
-    findStatesByCountryIsoTwoCode(iso2: string) : State[];
+    findStatesByCountryIsoTwoCode(iso2: string) : Country[];
 
     findCitiesByCountryIsoTwoCode(iso2: string) : City[];
 

@@ -47,16 +47,23 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
 
                 numberFile = 1
 
-                do{
+                do {
 
-                    countryFound = this._countriesCollection.filter((country: CountryLibObject) :boolean => country.iso2 == isoCode)
+                    try {
 
-                    if(countryFound.length > 0){
-                        countriesFound = countriesFound.concat(countryFound)
-                        break
+                        countryFound = this._countriesCollection.filter((country: CountryLibObject): boolean => country.iso2 == isoCode)
+
+                        if (countryFound.length > 0) {
+                            countriesFound = countriesFound.concat(countryFound)
+                            break
+                        }
+
+                        this.setJsonData(numberFile++)
+
+                    } catch (e) {
+
+                        break;
                     }
-
-                    this.setJsonData(numberFile++)
 
                 } while (true)
 
@@ -88,8 +95,9 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
         throw new Error("Method not implemented.");
     }
 
-    findStatesByCountryIsoTwoCode(iso2: string): State[] {
-        throw new Error("Method not implemented.");
+    findStatesByCountryIsoTwoCode(iso2: string): Country[] {
+
+        return this.findCountriesByIsoTwoCode(iso2, true)
     }
 
     findCitiesByCountryIsoTwoCode(iso2: string): City[] {
