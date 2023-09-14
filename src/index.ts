@@ -1,8 +1,6 @@
-import JsonDBLocationRepository from "@locations-infrastructure/Repositories/JsonDB/JsonDBLocationRepository";
+import JsonDBLocationRepository from "./Infrastructure/Repositories/JsonDB/JsonDBLocationRepository";
 
 const Repository : JsonDBLocationRepository =  JsonDBLocationRepository.getInstance();
-
-console.log(Repository.getAllCountries())
 
 export {
     Repository,

@@ -17,6 +17,7 @@
     "lodash": "^4.17.21"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "clear-cache": "jest --clearCache"
   }
 }

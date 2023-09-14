@@ -1,4 +1,4 @@
-import JsonDBLocationRepository from "@locations-infrastructure/Repositories/JsonDB/JsonDBLocationRepository";
+import JsonDBLocationRepository from "../../src/Infrastructure/Repositories/JsonDB/JsonDBLocationRepository";
 
 describe('Json DB repository test', () => {
 
@@ -23,6 +23,22 @@ describe('Json DB repository test', () => {
         let countries = _JsonDbRepository.findCountriesByIsoTwoCode(['AF','VE'])
 
         expect(countries.length).toBe(2);
+
+    });
+
+    test('get countries by iso code 2 with states', () => {
+
+        //with one country
+        let country = _JsonDbRepository.findCountriesByIsoTwoCode('AF')
+
+        expect(country.length).toBe(1);
+        expect(country[0].States).not.toBeNull();
+
+        //with many countries
+        let countries = _JsonDbRepository.findCountriesByIsoTwoCode(['AF','VE'])
+
+        expect(countries.length).toBe(2);
+        expect(country[0].States).not.toBeNull();
 
     });
 

@@ -6,10 +6,10 @@
     "declaration": true,
     "outDir": "./dist",
     "noResolve": false,
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@locations-domain/*": ["./Domain/*"],
-      "@locations-infrastructure/*": ["./Infrastructure/*"],
+      "@locations-domain/*": ["./src/Domain/*"],
+      "@locations-infrastructure/*": ["./src/Infrastructure/*"],
     }
   },
   "include": [

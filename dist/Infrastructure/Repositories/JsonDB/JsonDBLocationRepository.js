@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = require("@locations-domain/index");
+const Domain_1 = require("./../../../Domain");
 class JsonDBLocationRepository {
     static getInstance() {
         const subclass = this;
@@ -77,8 +77,9 @@ class JsonDBLocationRepository {
         } while (true);
         { }
     }
-    mapCountry(country) {
-        return new index_1.Country(country.id, country.name, country.iso2, country.iso3);
+    mapCountry(country, withState = false) {
+        let CountryObject = new Domain_1.Country(country.id, country.name, country.iso2, country.iso3);
+        return CountryObject;
     }
 }
 exports.default = JsonDBLocationRepository;

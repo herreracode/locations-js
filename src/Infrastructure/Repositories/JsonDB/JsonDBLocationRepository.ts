@@ -4,7 +4,7 @@ import {
     Country,
     State,
     CountryLibObject
-} from "@locations-domain/index"
+} from "./../../../Domain"
 
 export default class JsonDBLocationRepository implements LocationRepositoryContract {
 
@@ -128,10 +128,12 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
             } while (true) {}
     }
 
-    private mapCountry(country: CountryLibObject):Country
+    private mapCountry(country: CountryLibObject, withState: boolean = false) : Country
     {
-        return new Country(
+        let CountryObject: Country = new Country(
             country.id, country.name, country.iso2, country.iso3
-        )
+        );
+
+        return CountryObject
     }
 }
