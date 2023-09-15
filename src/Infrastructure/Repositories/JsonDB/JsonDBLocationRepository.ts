@@ -28,22 +28,14 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
         this._countriesCollection = require('./JsonData/fragments/file-fragment-' + numberFile + '.json')
     }
 
-    findCountriesByIsoTwoCode(iso2: string|string[] , withStates: boolean = false, withCities: boolean = false): Country[] {
+    private cleanJsonData():void {
+        this._countriesCollection = []
+    }
 
-        let numberFile: number = 1,
-            countriesFound: CountryLibObject[] = [],
+    findCountriesByIsoTwoCode(iso2: string[] , withStates: boolean = false, withCities: boolean = false): Country[] {
+
+        let countriesFound: CountryLibObject[] = [],
             countryExtracted: CountryLibObject|null
-
-        this.setJsonData(numberFile)
-
-        if(typeof iso2 === 'string'){
-
-            countryExtracted = this.extractCountryFromJsonByIsoCode2(iso2)
-
-            //to comply with the array data return because the method is countries, not country (in singular)
-            countriesFound = !!countryExtracted ? [countryExtracted] : []
-
-        }else{
 
             iso2.forEach((isoCode) => {
 
@@ -53,7 +45,6 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
                     ? countriesFound.push(countryExtracted)
                     : []
             })
-        }
 
         return countriesFound.map(
             (countryFound: CountryLibObject) : Country => this.mapCountry(countryFound, withStates)
@@ -61,7 +52,16 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
     }
 
     findCountryByIsoTwoCodeOrFail(iso2: string): Country {
-        throw new Error("Method not implemented.");
+
+        let countryExtracted: CountryLibObject|null
+
+        countryExtracted = this.extractCountryFromJsonByIsoCode2(iso2)
+
+        if(!countryExtracted){
+            throw new Error("country " + iso2 + "not found")
+        }
+
+        return this.mapCountry(countryExtracted)
     }
 
     findCountriesByIsoThreeCode(iso3: any, withStates: boolean, withCities: boolean): Country[] {
@@ -82,7 +82,7 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
 
     findStatesByCountryIsoTwoCode(iso2: string): Country[] {
 
-        return this.findCountriesByIsoTwoCode(iso2, true)
+        return [new Country(1,"adasd","222","222","2222")];
     }
 
     findCitiesByCountryIsoTwoCode(iso2: string): City[] {
@@ -153,6 +153,8 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
         let countryFound = null,
             numberFile :number = 1
 
+        this.setJsonData(numberFile)
+
         do {
 
             try {
@@ -174,6 +176,8 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
 
         } while (true)
 
-        return countryFound;
+        this.cleanJsonData()
+
+        return countryFound
     }
 }

@@ -1,10 +1,15 @@
 import JsonDBLocationRepository from "../../src/Infrastructure/Repositories/JsonDB/JsonDBLocationRepository";
+import {Country} from "../../src/Domain";
 
 describe('Json DB repository test', () => {
 
     const _JsonDbRepository :JsonDBLocationRepository = new JsonDBLocationRepository;
 
-    test('get all countries', () => {
+    /**
+     * get all countries method
+     */
+
+    it('get all countries', () => {
 
         let countries = _JsonDbRepository.getAllCountries()
 
@@ -12,15 +17,14 @@ describe('Json DB repository test', () => {
 
     });
 
-    test('get countries by iso code 2 happy path', () => {
+    /**
+     * scenarios METHOD findCountriesByIsoTwoCode
+     */
 
-        //with one country
-        let country = _JsonDbRepository.findCountriesByIsoTwoCode('VE')
-
-        expect(country.length).toBe(1);
+    it('get countries by iso code 2 happy path', () => {
 
         //with many countries
-        let countries = _JsonDbRepository.findCountriesByIsoTwoCode(['AF','VE'])
+        let countries = _JsonDbRepository.findCountriesByIsoTwoCode(['EC','VE'])
 
         expect(countries.length).toBe(2);
 
@@ -28,32 +32,39 @@ describe('Json DB repository test', () => {
 
     it('get_countries_by_non_existent_iso_code_2', () => {
 
-        //with one country
-        let country = _JsonDbRepository.findCountriesByIsoTwoCode('123', true)
-
-        expect(country.length).toBe(0);
-
-        //with many countries
+       //with many countries
         let countries = _JsonDbRepository.findCountriesByIsoTwoCode(['345'], true)
 
         expect(countries.length).toBe(0);
 
     });
 
-    test('get countries by iso code 2 with states', () => {
+    it('get countries by iso code 2 with states', () => {
 
-        //with one country
-        let country = _JsonDbRepository.findCountriesByIsoTwoCode('AF', true)
-
-        expect(country.length).toBe(1);
-        expect(country[0].States).not.toBeNull();
-
-        //with many countries
-        let countries = _JsonDbRepository.findCountriesByIsoTwoCode(['AF','VE'], true)
+       //with many countries have states
+        let countries = _JsonDbRepository.findCountriesByIsoTwoCode(['EC','VE'], true)
 
         expect(countries.length).toBe(2);
         expect(countries[0].States).not.toBeNull();
 
+    });
+
+    /**
+     * scenarios METHOD findCountryByIsoTwoCodeOrFail
+     */
+
+    it('get_country_by_iso_code_2_or_fail_happy_path', () => {
+
+        //with one country
+        let CountryObject = _JsonDbRepository.findCountryByIsoTwoCodeOrFail('VE')
+
+        expect(CountryObject).toBeInstanceOf(Country);
+
+    });
+
+    it('get_country_by_iso_code_2_or_fail_when_expected_exception', () => {
+
+        expect(() => _JsonDbRepository.findCountryByIsoTwoCodeOrFail('NOT_FOUND')).toThrow(Error);
     });
 
 });

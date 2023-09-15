@@ -5,7 +5,7 @@ import City from "../Entities/City";
 
 export default interface LocationRepository{
     
-    findCountriesByIsoTwoCode(iso2 : string, withStates : boolean, withCities : boolean) : Country[];
+    findCountriesByIsoTwoCode(iso2 : string[], withStates : boolean, withCities : boolean) : Country[];
 
     findCountryByIsoTwoCodeOrFail(iso2 : string) : Country;
 
