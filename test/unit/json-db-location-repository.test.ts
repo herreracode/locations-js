@@ -67,4 +67,11 @@ describe('Json DB repository test', () => {
         expect(() => _JsonDbRepository.findCountryByIsoTwoCodeOrFail('NOT_FOUND')).toThrow(Error);
     });
 
+    it('get_country_by_iso_code_2_or_fail_when_have_states', () => {
+
+        let CountryObject = _JsonDbRepository.findCountryByIsoTwoCodeOrFail('VE', true)
+
+        expect(CountryObject.States).not.toBeNull();
+    });
+
 });

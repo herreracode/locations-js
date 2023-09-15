@@ -51,7 +51,7 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
         );
     }
 
-    findCountryByIsoTwoCodeOrFail(iso2: string): Country {
+    findCountryByIsoTwoCodeOrFail(iso2: string, withStates: boolean = false): Country {
 
         let countryExtracted: CountryLibObject|null
 
@@ -61,7 +61,7 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
             throw new Error("country " + iso2 + "not found")
         }
 
-        return this.mapCountry(countryExtracted)
+        return this.mapCountry(countryExtracted, withStates)
     }
 
     findCountriesByIsoThreeCode(iso3: any, withStates: boolean, withCities: boolean): Country[] {
