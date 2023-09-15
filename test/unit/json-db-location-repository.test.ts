@@ -137,4 +137,13 @@ describe('Json DB repository test', () => {
         expect(() => _JsonDbRepository.findCitiesByCountryIsoTwoCodeAndStateCode('VE','NOT_FOUND')).toThrow(ExceptionsDomain.StateNotFound);
     });
 
+    it('get_cities_by_iso_code_2_and_state_code_when_state_dont_have_cities', () => {
+
+        //with one country
+        let Cities = _JsonDbRepository.findCitiesByCountryIsoTwoCodeAndStateCode('AL','01')
+
+        expect(Cities).toHaveLength(0);
+
+    });
+
 });
