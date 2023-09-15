@@ -12,35 +12,26 @@ class JsonDBLocationRepository {
     setJsonData(numberFile) {
         this._countriesCollection = require('./JsonData/fragments/file-fragment-' + numberFile + '.json');
     }
+    cleanJsonData() {
+        this._countriesCollection = [];
+    }
     findCountriesByIsoTwoCode(iso2, withStates = false, withCities = false) {
-        let numberFile = 1, countriesFound = [];
-        this.setJsonData(numberFile);
-        if (typeof iso2 === 'string') {
-            countriesFound = this._countriesCollection.filter((country) => country.iso2 == iso2);
-        }
-        else {
-            iso2.forEach((isoCode) => {
-                let countryFound = null;
-                numberFile = 1;
-                do {
-                    try {
-                        countryFound = this._countriesCollection.filter((country) => country.iso2 == isoCode);
-                        if (countryFound.length > 0) {
-                            countriesFound = countriesFound.concat(countryFound);
-                            break;
-                        }
-                        this.setJsonData(numberFile++);
-                    }
-                    catch (e) {
-                        break;
-                    }
-                } while (true);
-            });
-        }
+        let countriesFound = [], countryExtracted;
+        iso2.forEach((isoCode) => {
+            countryExtracted = this.extractCountryFromJsonByIsoCode2(isoCode);
+            !!countryExtracted
+                ? countriesFound.push(countryExtracted)
+                : [];
+        });
         return countriesFound.map((countryFound) => this.mapCountry(countryFound, withStates));
     }
-    findCountryByIsoTwoCodeOrFail(iso2) {
-        throw new Error("Method not implemented.");
+    findCountryByIsoTwoCodeOrFail(iso2, withStates = false, withCities = false) {
+        let countryExtracted;
+        countryExtracted = this.extractCountryFromJsonByIsoCode2(iso2);
+        if (!countryExtracted) {
+            throw new Error("country " + iso2 + "not found");
+        }
+        return this.mapCountry(countryExtracted, withStates, withCities);
     }
     findCountriesByIsoThreeCode(iso3, withStates, withCities) {
         throw new Error("Method not implemented.");
@@ -55,7 +46,7 @@ class JsonDBLocationRepository {
         throw new Error("Method not implemented.");
     }
     findStatesByCountryIsoTwoCode(iso2) {
-        return this.findCountriesByIsoTwoCode(iso2, true);
+        return [new Domain_1.Country(1, "adasd", "222", "222", "2222")];
     }
     findCitiesByCountryIsoTwoCode(iso2) {
         throw new Error("Method not implemented.");
@@ -82,17 +73,41 @@ class JsonDBLocationRepository {
         } while (true);
         { }
     }
-    mapCountry(country, withState = false) {
+    mapCountry(country, withState = false, withCities = false) {
         let CountryObject = new Domain_1.Country(country.id, country.name, country.iso2, country.iso3);
         if (withState) {
-            CountryObject.States = country.states.map((state) => this.mapState(state));
+            CountryObject.States = country.states.map((state) => this.mapState(state, withCities));
         }
         return CountryObject;
     }
-    mapState(state) {
+    mapState(state, withCities = false) {
         let StateObject = new Domain_1.State(state.id, state.name, state.state_code);
-        //todo: with cities
+        if (withCities) {
+            StateObject.Cities = state.cities.map((city) => this.mapCity(city));
+        }
         return StateObject;
+    }
+    extractCountryFromJsonByIsoCode2(isoCode2) {
+        let countryFound = null, numberFile = 1;
+        this.setJsonData(numberFile);
+        do {
+            try {
+                countryFound = this._countriesCollection.filter((country) => country.iso2 == isoCode2)[0];
+                countryFound = typeof countryFound !== 'undefined' ? countryFound : null;
+                if (!!countryFound) {
+                    break;
+                }
+                this.setJsonData(numberFile++);
+            }
+            catch (e) {
+                break;
+            }
+        } while (true);
+        this.cleanJsonData();
+        return countryFound;
+    }
+    mapCity(city) {
+        return new Domain_1.City(city.id, city.name, city.latitude, city.longitude);
     }
 }
 exports.default = JsonDBLocationRepository;

@@ -4,8 +4,9 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
     private _countriesCollection;
     static getInstance(): JsonDBLocationRepository;
     private setJsonData;
-    findCountriesByIsoTwoCode(iso2: string | string[], withStates?: boolean, withCities?: boolean): Country[];
-    findCountryByIsoTwoCodeOrFail(iso2: string): Country;
+    private cleanJsonData;
+    findCountriesByIsoTwoCode(iso2: string[], withStates?: boolean, withCities?: boolean): Country[];
+    findCountryByIsoTwoCodeOrFail(iso2: string, withStates?: boolean, withCities?: boolean): Country;
     findCountriesByIsoThreeCode(iso3: any, withStates: boolean, withCities: boolean): Country[];
     findCountryByIsoThreeCodeOrFail(iso3: string): Country;
     findCountriesById(id: string, withStates: boolean, withCities: boolean): Country[];
@@ -17,4 +18,6 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
     getAllCountries(): Country[];
     private mapCountry;
     private mapState;
+    private extractCountryFromJsonByIsoCode2;
+    private mapCity;
 }
