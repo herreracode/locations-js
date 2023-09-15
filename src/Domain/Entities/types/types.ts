@@ -10,10 +10,21 @@ type StateLibObject = {
     id: number,
     name: string,
     state_code: string,
+    cities: [],
 
+}
+
+type CityLibObject = {
+    id: number,
+    name: string,
+    state_code: string,
+    country_code: string,
+    latitude: string,
+    longitude: string
 }
 
 export {
     CountryLibObject,
-    StateLibObject
+    StateLibObject,
+    CityLibObject
 }

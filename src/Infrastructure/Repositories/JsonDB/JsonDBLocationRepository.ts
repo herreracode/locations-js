@@ -4,7 +4,8 @@ import {
     Country,
     State,
     CountryLibObject,
-    StateLibObject
+    StateLibObject,
+    CityLibObject
 } from "./../../../Domain"
 
 export default class JsonDBLocationRepository implements LocationRepositoryContract {
@@ -51,7 +52,7 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
         );
     }
 
-    findCountryByIsoTwoCodeOrFail(iso2: string, withStates: boolean = false): Country {
+    findCountryByIsoTwoCodeOrFail(iso2: string, withStates: boolean = false, withCities :boolean = false): Country {
 
         let countryExtracted: CountryLibObject|null
 
@@ -61,7 +62,7 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
             throw new Error("country " + iso2 + "not found")
         }
 
-        return this.mapCountry(countryExtracted, withStates)
+        return this.mapCountry(countryExtracted, withStates, withCities)
     }
 
     findCountriesByIsoThreeCode(iso3: any, withStates: boolean, withCities: boolean): Country[] {
@@ -122,7 +123,7 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
             } while (true) {}
     }
 
-    private mapCountry(country: CountryLibObject, withState: boolean = false) : Country
+    private mapCountry(country: CountryLibObject, withState: boolean = false , withCities :boolean = false) : Country
     {
         let CountryObject: Country = new Country(
             country.id, country.name, country.iso2, country.iso3
@@ -130,20 +131,22 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
         
         if(withState){
 
-            CountryObject.States = country.states.map((state) => this.mapState(state))
+            CountryObject.States = country.states.map((state) => this.mapState(state, withCities))
 
         }
 
         return CountryObject
     }
 
-    private mapState(state :StateLibObject) :State
+    private mapState(state :StateLibObject, withCities: boolean = false) :State
     {
         let StateObject = new State(
             state.id, state.name, state.state_code
         );
 
-        //todo: with cities
+        if(withCities) {
+            StateObject.Cities = state.cities.map((city) => this.mapCity(city))
+        }
 
         return StateObject;
     }
@@ -179,5 +182,15 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
         this.cleanJsonData()
 
         return countryFound
+    }
+
+    private mapCity(city :CityLibObject):City{
+
+        return new City(
+            city.id,
+            city.name,
+            city.latitude,
+            city.longitude,
+        );
     }
 }

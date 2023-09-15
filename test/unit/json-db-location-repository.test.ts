@@ -74,4 +74,12 @@ describe('Json DB repository test', () => {
         expect(CountryObject.States).not.toBeNull();
     });
 
+    it('get_country_by_iso_code_2_or_fail_when_have_states_and_cities', () => {
+
+        let CountryObject = _JsonDbRepository.findCountryByIsoTwoCodeOrFail('VE', true, true)
+
+        expect(CountryObject.States[0].Cities).not.toBeUndefined();
+        expect(CountryObject.States[0].Cities).not.toBeNull();
+    });
+
 });
