@@ -108,4 +108,13 @@ describe('Json DB repository test', () => {
 
     });
 
+    /*
+     * This scenario occurs by using the findCountryByIsoTwoCodeOrFail method
+     * is validated to take the scenario into consideration
+     */
+    it('get_states_by_iso_code_2_or_fail_when_expected_exception', () => {
+
+        expect(() => _JsonDbRepository.findStatesByCountryIsoTwoCode('NOT_FOUND')).toThrow(Error);
+    });
+
 });
