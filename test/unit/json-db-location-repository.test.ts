@@ -15,7 +15,7 @@ describe('Json DB repository test', () => {
     test('get countries by iso code 2 happy path', () => {
 
         //with one country
-        let country = _JsonDbRepository.findCountriesByIsoTwoCode('AF')
+        let country = _JsonDbRepository.findCountriesByIsoTwoCode('VE')
 
         expect(country.length).toBe(1);
 
@@ -26,7 +26,7 @@ describe('Json DB repository test', () => {
 
     });
 
-    test('get countries by non-existent iso code 2', () => {
+    it('get_countries_by_non_existent_iso_code_2', () => {
 
         //with one country
         let country = _JsonDbRepository.findCountriesByIsoTwoCode('123', true)

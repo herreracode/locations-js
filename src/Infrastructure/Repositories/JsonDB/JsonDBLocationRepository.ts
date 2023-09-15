@@ -31,42 +31,27 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
     findCountriesByIsoTwoCode(iso2: string|string[] , withStates: boolean = false, withCities: boolean = false): Country[] {
 
         let numberFile: number = 1,
-            countriesFound: CountryLibObject[] = []
+            countriesFound: CountryLibObject[] = [],
+            countryExtracted: CountryLibObject|null
 
         this.setJsonData(numberFile)
 
         if(typeof iso2 === 'string'){
 
-            countriesFound = this._countriesCollection.filter((country: CountryLibObject) :boolean => country.iso2 == iso2)
+            countryExtracted = this.extractCountryFromJsonByIsoCode2(iso2)
+
+            //to comply with the array data return because the method is countries, not country (in singular)
+            countriesFound = !!countryExtracted ? [countryExtracted] : []
 
         }else{
 
             iso2.forEach((isoCode) => {
 
-                let countryFound = null
+                countryExtracted = this.extractCountryFromJsonByIsoCode2(isoCode)
 
-                numberFile = 1
-
-                do {
-
-                    try {
-
-                        countryFound = this._countriesCollection.filter((country: CountryLibObject): boolean => country.iso2 == isoCode)
-
-                        if (countryFound.length > 0) {
-                            countriesFound = countriesFound.concat(countryFound)
-                            break
-                        }
-
-                        this.setJsonData(numberFile++)
-
-                    } catch (e) {
-
-                        break;
-                    }
-
-                } while (true)
-
+                !!countryExtracted
+                    ? countriesFound.push(countryExtracted)
+                    : []
             })
         }
 
@@ -161,5 +146,34 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
         //todo: with cities
 
         return StateObject;
+    }
+
+    private extractCountryFromJsonByIsoCode2(isoCode2: string): CountryLibObject|null
+    {
+        let countryFound = null,
+            numberFile :number = 1
+
+        do {
+
+            try {
+
+                countryFound = this._countriesCollection.filter((country: CountryLibObject): boolean => country.iso2 == isoCode2)[0];
+
+                countryFound = typeof countryFound !== 'undefined' ? countryFound : null
+
+                if (!!countryFound) {
+                    break
+                }
+
+                this.setJsonData(numberFile++)
+
+            } catch (e) {
+
+                break;
+            }
+
+        } while (true)
+
+        return countryFound;
     }
 }
