@@ -9,7 +9,7 @@ export default interface LocationRepository {
     findCountriesById(id: string, withStates: boolean, withCities: boolean): Country[];
     findCountryByIdOrFail(id: string): Country;
     findStatesByCountryIsoTwoCode(iso2: string): State[];
-    findCitiesByCountryIsoTwoCode(iso2: string): City[];
+    findCitiesByCountryIsoTwoCodeAndStateCode(iso2: string, stateCode: string): City[];
     findStatesByCountryIsoThreeCode(iso3: string): State[];
     findCitiesByCountryIsoThreeCode(iso3: string): City[];
     getAllCountries(): Country[];

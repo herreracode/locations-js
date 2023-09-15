@@ -49,8 +49,13 @@ class JsonDBLocationRepository {
         let countries = this.findCountryByIsoTwoCodeOrFail(iso2Country, true, withCities);
         return countries.States;
     }
-    findCitiesByCountryIsoTwoCode(iso2) {
-        throw new Error("Method not implemented.");
+    findCitiesByCountryIsoTwoCodeAndStateCode(iso2, stateCode) {
+        let countries = this.findCountryByIsoTwoCodeOrFail(iso2, true, true);
+        let State = countries.States.filter((state) => state.stateCode == stateCode)[0];
+        if (!State) {
+            throw new Domain_1.ExceptionsDomain.StateNotFound("The State " + stateCode + " not found");
+        }
+        return State.Cities;
     }
     findStatesByCountryIsoThreeCode(iso3) {
         throw new Error("Method not implemented.");

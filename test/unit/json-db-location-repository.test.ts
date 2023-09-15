@@ -1,5 +1,5 @@
 import JsonDBLocationRepository from "../../src/Infrastructure/Repositories/JsonDB/JsonDBLocationRepository";
-import {Country} from "../../src/Domain";
+import {Country, City, ExceptionsDomain} from "../../src/Domain";
 
 describe('Json DB repository test', () => {
 
@@ -115,6 +115,26 @@ describe('Json DB repository test', () => {
     it('get_states_by_iso_code_2_or_fail_when_expected_exception', () => {
 
         expect(() => _JsonDbRepository.findStatesByCountryIsoTwoCode('NOT_FOUND')).toThrow(Error);
+    });
+
+    /**
+     * scenarios METHOD findCitiesByCountryIsoTwoCodeAndStateCode
+     */
+
+    it('get_cities_by_iso_code_2_and_state_code_happy_path', () => {
+
+        //with one country
+        let Cities = _JsonDbRepository.findCitiesByCountryIsoTwoCodeAndStateCode('VE','A')
+
+        expect(Cities).not.toBeUndefined();
+        expect(Cities).not.toBeNull();
+        expect(Cities[0]).toBeInstanceOf(City)
+
+    });
+
+    it('get_cities_by_iso_code_2_and_state_code_when_state_code_not_exist', () => {
+
+        expect(() => _JsonDbRepository.findCitiesByCountryIsoTwoCodeAndStateCode('VE','NOT_FOUND')).toThrow(ExceptionsDomain.StateNotFound);
     });
 
 });

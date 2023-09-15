@@ -5,7 +5,8 @@ import {
     State,
     CountryLibObject,
     StateLibObject,
-    CityLibObject
+    CityLibObject,
+    ExceptionsDomain
 } from "./../../../Domain"
 
 export default class JsonDBLocationRepository implements LocationRepositoryContract {
@@ -88,8 +89,17 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
         return countries.States
     }
 
-    findCitiesByCountryIsoTwoCode(iso2: string): City[] {
-        throw new Error("Method not implemented.")
+    findCitiesByCountryIsoTwoCodeAndStateCode(iso2: string, stateCode: string): City[] {
+
+        let countries: Country = this.findCountryByIsoTwoCodeOrFail(iso2, true, true)
+
+        let State: State =  countries.States.filter((state :State) => state.stateCode == stateCode)[0]
+
+        if(!State){
+            throw new ExceptionsDomain.StateNotFound("The State " + stateCode + " not found")
+        }
+
+        return State.Cities
     }
 
     findStatesByCountryIsoThreeCode(iso3: string): State[] {
