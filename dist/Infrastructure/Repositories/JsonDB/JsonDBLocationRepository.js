@@ -45,8 +45,9 @@ class JsonDBLocationRepository {
     findCountryByIdOrFail(id) {
         throw new Error("Method not implemented.");
     }
-    findStatesByCountryIsoTwoCode(iso2) {
-        return [new Domain_1.Country(1, "adasd", "222", "222", "2222")];
+    findStatesByCountryIsoTwoCode(iso2Country, withCities = false) {
+        let countries = this.findCountryByIsoTwoCodeOrFail(iso2Country, true, withCities);
+        return countries.States;
     }
     findCitiesByCountryIsoTwoCode(iso2) {
         throw new Error("Method not implemented.");

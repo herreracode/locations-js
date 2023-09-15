@@ -82,4 +82,30 @@ describe('Json DB repository test', () => {
         expect(CountryObject.States[0].Cities).not.toBeNull();
     });
 
+    /**
+     * scenarios METHOD findStatesByCountryIsoTwoCode
+     */
+
+    it('get_state_by_iso_code_2_or_fail_happy_path_without_cities', () => {
+
+        //with one country
+        let States = _JsonDbRepository.findStatesByCountryIsoTwoCode('VE')
+
+        expect(States).not.toBeUndefined();
+        expect(States).not.toBeNull();
+        expect(States[0].Cities).toBeUndefined();
+
+    });
+
+    it('get_state_by_iso_code_2_or_fail_happy_path_with_cities', () => {
+
+        //with one country
+        let States = _JsonDbRepository.findStatesByCountryIsoTwoCode('VE', true)
+
+        expect(States).not.toBeUndefined();
+        expect(States).not.toBeNull();
+        expect(States[0].Cities).not.toBeUndefined();
+
+    });
+
 });

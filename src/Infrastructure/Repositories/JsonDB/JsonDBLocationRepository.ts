@@ -10,19 +10,19 @@ import {
 
 export default class JsonDBLocationRepository implements LocationRepositoryContract {
 
-    private static _instances: JsonDBLocationRepository;
+    private static _instances: JsonDBLocationRepository
 
-    private _countriesCollection: CountryLibObject[];
+    private _countriesCollection: CountryLibObject[]
 
     public static getInstance(): JsonDBLocationRepository {
 
-        const subclass = this;
+        const subclass = this
 
         if (!JsonDBLocationRepository._instances) {
-            JsonDBLocationRepository._instances = new subclass();
+            JsonDBLocationRepository._instances = new subclass()
         }
 
-        return JsonDBLocationRepository._instances;
+        return JsonDBLocationRepository._instances
     }
 
     private setJsonData(numberFile: number): void {
@@ -49,7 +49,7 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
 
         return countriesFound.map(
             (countryFound: CountryLibObject) : Country => this.mapCountry(countryFound, withStates)
-        );
+        )
     }
 
     findCountryByIsoTwoCodeOrFail(iso2: string, withStates: boolean = false, withCities :boolean = false): Country {
@@ -66,36 +66,38 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
     }
 
     findCountriesByIsoThreeCode(iso3: any, withStates: boolean, withCities: boolean): Country[] {
-        throw new Error("Method not implemented.");
+        throw new Error("Method not implemented.")
     }
 
     findCountryByIsoThreeCodeOrFail(iso3: string): Country {
-        throw new Error("Method not implemented.");
+        throw new Error("Method not implemented.")
     }
 
     findCountriesById(id: string, withStates: boolean, withCities: boolean): Country[] {
-        throw new Error("Method not implemented.");
+        throw new Error("Method not implemented.")
     }
 
     findCountryByIdOrFail(id: string): Country {
-        throw new Error("Method not implemented.");
+        throw new Error("Method not implemented.")
     }
 
-    findStatesByCountryIsoTwoCode(iso2: string): Country[] {
+    findStatesByCountryIsoTwoCode(iso2Country: string, withCities: boolean = false): State[] {
 
-        return [new Country(1,"adasd","222","222","2222")];
+        let countries: Country = this.findCountryByIsoTwoCodeOrFail(iso2Country, true, withCities)
+
+        return countries.States
     }
 
     findCitiesByCountryIsoTwoCode(iso2: string): City[] {
-        throw new Error("Method not implemented.");
+        throw new Error("Method not implemented.")
     }
 
     findStatesByCountryIsoThreeCode(iso3: string): State[] {
-        throw new Error("Method not implemented.");
+        throw new Error("Method not implemented.")
     }
 
     findCitiesByCountryIsoThreeCode(iso3: string): City[] {
-        throw new Error("Method not implemented.");
+        throw new Error("Method not implemented.")
     }
 
     // @ts-ignore
@@ -127,7 +129,7 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
     {
         let CountryObject: Country = new Country(
             country.id, country.name, country.iso2, country.iso3
-        );
+        )
         
         if(withState){
 
@@ -142,13 +144,13 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
     {
         let StateObject = new State(
             state.id, state.name, state.state_code
-        );
+        )
 
         if(withCities) {
             StateObject.Cities = state.cities.map((city) => this.mapCity(city))
         }
 
-        return StateObject;
+        return StateObject
     }
 
     private extractCountryFromJsonByIsoCode2(isoCode2: string): CountryLibObject|null
@@ -162,7 +164,7 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
 
             try {
 
-                countryFound = this._countriesCollection.filter((country: CountryLibObject): boolean => country.iso2 == isoCode2)[0];
+                countryFound = this._countriesCollection.filter((country: CountryLibObject): boolean => country.iso2 == isoCode2)[0]
 
                 countryFound = typeof countryFound !== 'undefined' ? countryFound : null
 
@@ -174,7 +176,7 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
 
             } catch (e) {
 
-                break;
+                break
             }
 
         } while (true)
@@ -191,6 +193,6 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
             city.name,
             city.latitude,
             city.longitude,
-        );
+        )
     }
 }
