@@ -23,7 +23,7 @@ class JsonDBLocationRepository {
                 ? countriesFound.push(countryExtracted)
                 : [];
         });
-        return countriesFound.map((countryFound) => this.mapCountry(countryFound, withStates));
+        return countriesFound.map((countryFound) => this.mapCountry(countryFound, withStates, withCities));
     }
     findCountryByIsoTwoCodeOrFail(iso2, withStates = false, withCities = false) {
         let countryExtracted;
@@ -50,8 +50,7 @@ class JsonDBLocationRepository {
         return countries.States;
     }
     findCitiesByCountryIsoTwoCodeAndStateCode(iso2, stateCode) {
-        let countries = this.findCountryByIsoTwoCodeOrFail(iso2, true, true);
-        let State = countries.States.filter((state) => state.stateCode == stateCode)[0];
+        let State = this.findStatesByCountryIsoTwoCode(iso2, true).filter((state) => state.stateCode == stateCode)[0];
         if (!State) {
             throw new Domain_1.ExceptionsDomain.StateNotFound("The State " + stateCode + " not found");
         }
