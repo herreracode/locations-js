@@ -91,9 +91,7 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
 
     findCitiesByCountryIsoTwoCodeAndStateCode(iso2: string, stateCode: string): City[] {
 
-        let countries: Country = this.findCountryByIsoTwoCodeOrFail(iso2, true, true)
-
-        let State: State =  countries.States.filter((state :State) => state.stateCode == stateCode)[0]
+        let State: State =  this.findStatesByCountryIsoTwoCode(iso2, true).filter((state :State) => state.stateCode == stateCode)[0]
 
         if(!State){
             throw new ExceptionsDomain.StateNotFound("The State " + stateCode + " not found")
