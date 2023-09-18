@@ -49,6 +49,17 @@ describe('Json DB repository test', () => {
 
     });
 
+    it('get countries by iso code 2 with states and cities', () => {
+
+        //with many countries have states
+        let countries = _JsonDbRepository.findCountriesByIsoTwoCode(['EC','VE'], true, true)
+
+        expect(countries.length).toBe(2);
+        expect(countries[0].States[0].Cities).not.toBeNull();
+        expect(countries[0].States[0].Cities).not.toBeUndefined();
+
+    });
+
     /**
      * scenarios METHOD findCountryByIsoTwoCodeOrFail
      */

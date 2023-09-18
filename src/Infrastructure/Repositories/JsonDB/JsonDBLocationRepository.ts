@@ -49,7 +49,7 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
             })
 
         return countriesFound.map(
-            (countryFound: CountryLibObject) : Country => this.mapCountry(countryFound, withStates)
+            (countryFound: CountryLibObject) : Country => this.mapCountry(countryFound, withStates, withCities)
         )
     }
 
