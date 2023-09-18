@@ -112,7 +112,7 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
     getAllCountries(): Country[] {
 
             let numberFile: number = 1
-            let countries: Country[]
+            let countries: Country[] = []
 
             do {
 
@@ -126,7 +126,7 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
 
                 }
 
-                countries = this._countriesCollection.map((country): Country => this.mapCountry(country))
+                countries = countries.concat(this._countriesCollection.map((country): Country => this.mapCountry(country)))
 
                 numberFile++
 

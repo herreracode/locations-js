@@ -65,7 +65,7 @@ class JsonDBLocationRepository {
     // @ts-ignore
     getAllCountries() {
         let numberFile = 1;
-        let countries;
+        let countries = [];
         do {
             try {
                 this.setJsonData(numberFile);
@@ -73,7 +73,7 @@ class JsonDBLocationRepository {
             catch (e) {
                 return countries;
             }
-            countries = this._countriesCollection.map((country) => this.mapCountry(country));
+            countries = countries.concat(this._countriesCollection.map((country) => this.mapCountry(country)));
             numberFile++;
         } while (true);
         { }
