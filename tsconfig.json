@@ -2,10 +2,15 @@
   "compilerOptions": {
     "module": "commonjs",
     "esModuleInterop": true,
-    "resolveJsonModule": true,
     "target": "es2016",
     "declaration": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "noResolve": false,
+    "baseUrl": ".",
+    "paths": {
+      "@locations-domain/*": ["./src/Domain/*"],
+      "@locations-infrastructure/*": ["./src/Infrastructure/*"],
+    }
   },
   "include": [
     "src/**/*"

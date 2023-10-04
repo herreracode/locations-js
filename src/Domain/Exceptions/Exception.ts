@@ -1,7 +1,3 @@
-export default abstract class Exception{
-
-    constructor(public message: string){
-
-    }
+export default abstract class Exception extends Error{
 
 }
