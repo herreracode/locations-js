@@ -3,7 +3,8 @@ type CountryLibObject = {
     name: string,
     iso2: string,
     iso3: string,
-    states: []
+    states: [],
+    translations: object
 }
 
 type StateLibObject = {

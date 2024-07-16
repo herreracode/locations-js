@@ -15,6 +15,9 @@ describe('Json DB repository test', () => {
 
         expect(countries).not.toBeNull();
 
+        //valid the first got that has translations
+        expect(countries[0].translations).not.toBeNull();
+
     });
 
     /**

@@ -4,6 +4,7 @@ type CountryLibObject = {
     iso2: string;
     iso3: string;
     states: [];
+    translations: object;
 };
 type StateLibObject = {
     id: number;
