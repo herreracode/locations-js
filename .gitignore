@@ -1,5 +1,55 @@
 out
-.vscode
 node_modules
+
+# Vim swap files
+.*.swp
+.*.swo
+
+# Vim backup files
+.*.un~
+
+# Emacs backup files
+*~
+.#*
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# JetBrains IDEs (e.g., IntelliJ, PyCharm, WebStorm)
+.idea/
+*.iml
+
+# Atom
+*.atom
+.atom/
+*.*.cson
+*.*.custom.cson
+
+# Eclipse
+.project
+.classpath
+.cproject
+.settings/
+
+# NetBeans
+nbproject/
+nbproject/private/
+
+# Microsoft Visual Studio
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# System files
+.DS_Store
+Thumbs.db
 
 **/src/Infrastructure/Repositories/JsonDB/JsonData/fragments/**json
