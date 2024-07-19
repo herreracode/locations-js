@@ -136,7 +136,7 @@ export default class JsonDBLocationRepository implements LocationRepositoryContr
     private mapCountry(country: CountryLibObject, withState: boolean = false , withCities :boolean = false) : Country
     {
         let CountryObject: Country = new Country(
-            country.id, country.name, country.iso2, country.iso3
+            country.id, country.name, country.iso2, country.iso3, country.translations
         )
         
         if(withState){
