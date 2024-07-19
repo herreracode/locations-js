@@ -17,7 +17,6 @@ services:
       dockerfile: DockerfileForR
     working_dir: /usr/local/src/myscripts
     container_name: r-base-locations-js
-    restart: unless-stopped
     volumes:
       - ./:/usr/local/src/myscripts
     stdin_open: true
