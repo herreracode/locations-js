@@ -4,7 +4,10 @@ type CountryLibObject = {
     iso2: string,
     iso3: string,
     states: [],
-    translations: object
+    translations: object,
+    phone_code: string,
+    emoji: string,
+    emojiU: string,
 }
 
 type StateLibObject = {
