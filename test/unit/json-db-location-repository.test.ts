@@ -160,4 +160,14 @@ describe('Json DB repository test', () => {
 
     });
 
+    it('should_contain_country_flag', () => {
+            
+        const country = _JsonDbRepository.findCountryByIsoTwoCodeOrFail('EC');
+
+        console.log(country);
+
+        expect(country.flagEmoji).not.toBeUndefined();
+        expect(country.flagEmojiUnicode).not.toBeNull();
+    });
+
 });
