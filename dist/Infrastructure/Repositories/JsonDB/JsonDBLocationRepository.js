@@ -79,7 +79,7 @@ class JsonDBLocationRepository {
         { }
     }
     mapCountry(country, withState = false, withCities = false) {
-        let CountryObject = new Domain_1.Country(country.id, country.name, country.iso2, country.iso3, country.translations);
+        let CountryObject = new Domain_1.Country(country.id, country.name, country.iso2, country.iso3, country.translations, country.phone_code, country.emoji, country.emojiU);
         if (withState) {
             CountryObject.States = country.states.map((state) => this.mapState(state, withCities));
         }

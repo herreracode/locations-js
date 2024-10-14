@@ -5,9 +5,11 @@ export default class Country {
     iso2: string;
     iso3: string;
     translations: Object | null;
-    numericCode: string | null;
     phoneCode: string | null;
+    flagEmoji: string | null;
+    flagEmojiUnicode: string | null;
+    numericCode: string | null;
     currency: string | null;
     States: State[] | null;
-    constructor(id: number, name: string, iso2: string, iso3: string, translations?: Object | null, numericCode?: string | null, phoneCode?: string | null, currency?: string | null, States?: State[] | null);
+    constructor(id: number, name: string, iso2: string, iso3: string, translations?: Object | null, phoneCode?: string | null, flagEmoji?: string | null, flagEmojiUnicode?: string | null, numericCode?: string | null, currency?: string | null, States?: State[] | null);
 }
